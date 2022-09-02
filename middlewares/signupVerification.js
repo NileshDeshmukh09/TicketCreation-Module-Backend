@@ -22,7 +22,7 @@
      }
  
     /**
-    * Valiate if the userID is already not present
+    * Valiate if the userID is already not preset
     */
      const user = await User.findOne({userId : req.body.userId});
      if(user != null){
@@ -45,7 +45,23 @@
         return res.status(400).send("Email Already Exists");
     }
 
- 
+    /** validate Email  */
+    const emailPat = /^[A-Za-z0-9_\.]+@fynd\.com$/;
+
+    // message : "Invalid email. Please make sure the email is a fynd.com email."
+    if( !emailPat.test( req.body.email )){
+        return res.status(400).send("Invalid email. Please make sure the email is a fynd.com email.")
+    }
+
+    /** validate the "userType" if it already Exists */
+    const userType = req.body.userType;
+    const userTypes = [ constant.userTypes.customer , constant.userTypes.admin , constant.userTypes.engineer ]
+    if( userType && !userTypes.includes( userType )){
+        return res.status(400).send("UserType is Not Correct !")
+    }
+
+  
+    
      next(); // give the controll to the controller
  }
  
