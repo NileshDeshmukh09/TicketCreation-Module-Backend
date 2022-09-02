@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const constants = require("../utils/constants");
 const bcrypt = require("bcryptjs");
 /** Registration Controller  for the User  */
 

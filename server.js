@@ -1,11 +1,13 @@
 const express =require("express");
 const TicketServerConfig = require("./configs/TicketServer.config");
 const mongoose = require("mongoose");
+const logger = require("morgan");
 const databaseConfig = require("./configs/database.config");
 const bodyParser = require("body-parser");
 
 const app = express();
 
+app.use(logger('dev'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
