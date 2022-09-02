@@ -2,9 +2,12 @@ const express =require("express");
 const TicketServerConfig = require("./configs/TicketServer.config");
 const mongoose = require("mongoose");
 const databaseConfig = require("./configs/database.config");
-
+const bodyParser = require("body-parser");
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
 /**
  * Setup the mongodb connection 
