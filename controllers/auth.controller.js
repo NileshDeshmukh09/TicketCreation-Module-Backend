@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 
 /** Registration Controller  for the User  */
 
-exports.singup = async ( req, res ) => {
+exports.signup = async ( req, res ) => {
 
     const UserDetailsStoredInDB = {
         name: req.body.name,
