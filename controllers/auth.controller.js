@@ -1,6 +1,8 @@
 const User = require("../models/user.model");
 const constants = require("../utils/constants");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("../configs/auth.config");
 /** Registration Controller  for the User  */
 
 exports.signup = async ( req, res ) => {
@@ -48,3 +50,56 @@ exports.signup = async ( req, res ) => {
     }
 
 }
+
+
+/**
+ * signin Controller
+ */
+ exports.signin = async (req, res) => {
+
+    //Search the user if it exists 
+    try {
+        var user = await User.findOne({ userId: req.body.userId });
+    } catch (err) {
+        console.log(err.message);
+    }
+    
+    if (user == null) {
+        return res.status(400).send("User ID Doesn't Exist !")
+    }
+
+    /**
+     * Check if the user is approved
+     */
+    if (user.userStatus != constants.userStatus.approved) {
+        return res.status(200).send("Can't allow the login as the User is still not approved")
+    }
+
+    //User is existing, so now we will do the password matching
+    const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
+
+    if (!isPasswordValid) {
+        return res.status(401).send("Invalid Password")
+    }
+
+    //** Successfull login */
+    //I need to generate access token now
+    const token = jwt.sign({ id: user.userId }, config.secret, {
+        expiresIn: '2h'
+    });
+
+    //Send the response back
+    res.status(200).send({
+        status : 200,
+        message: `${user.userId} login Successfully !`,
+        user: {
+            name: user.name,
+            userId: user.userId,
+            email: user.email,
+            userType: user.userType,
+            userStatus: user.userStatus,
+            accessToken: token
+        }
+    })
+
+};
