@@ -5,6 +5,7 @@
 
   const mongoose = require("mongoose");
   const databaseConfig = require("../configs/database.config");
+  const constants = require("../utils/constants");
   
   const userSchema = new mongoose.Schema({
   
@@ -44,12 +45,13 @@
       userType : {
           type : String,
           required : true,
-          default : "CUSTOMER"
+          default : constants.userTypes.customer
+        //   default : "CUSTOMER"
       },
       userStatus : {
           type : String,
           required : true,
-          default : "APPROVED"
+          default : constants.userStatus.approved
       },
     
   

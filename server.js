@@ -18,6 +18,9 @@ app.use(bodyParser.urlencoded({extended:true}));
     
 })
 
+const authRouter = require('./routes/user.routes');
+app.use( authRouter );
+
 
 app.listen(TicketServerConfig.PORT, () => {
     console.log(`Ticket-Creation-Module-Server has started on the port http://localhost:${TicketServerConfig.PORT}` );
