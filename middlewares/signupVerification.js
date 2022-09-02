@@ -1,5 +1,5 @@
 /**
- *  custom middleware for varifying the request body
+ *  custom middleware for verifying the request body
  */
 
  const User = require("../models/user.model");
