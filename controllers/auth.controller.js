@@ -93,7 +93,7 @@ exports.signup = async ( req, res ) => {
 
     //** Successfull login */
     //I need to generate access token now
-    const token = jwt.sign({ id: user.userId }, config.secret, {
+    const token = jwt.sign({ id: user.userId }, process.env.SECRET, {
         expiresIn: '2h'
     });
 

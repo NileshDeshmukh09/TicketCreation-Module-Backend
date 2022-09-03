@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 /**
  * Setup the mongodb connection 
  */
- mongoose.connect(databaseConfig.DB_URL, ()=>{
+ mongoose.connect(process.env.DB_URL, ()=>{
     console.log("MongoDB connected ");
     
     /** Intialize the admin */
