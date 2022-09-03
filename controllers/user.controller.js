@@ -98,7 +98,45 @@ async function findAllUsers(req, res){
 
 }
 
+
+async function updateUserByID(req, res){
+    /**
+     * One of the ways of Updating
+     */
+    try{
+        const userIDReq = req.params.userId;
+        const user =await User.findOneAndUpdate({userId : userIDReq} ,{
+            name : req.body.name,
+            userStatus : req.body.userStatus,
+            userType : req.body.userType,
+        }).exec();
+
+        console.log("UserStatus : ", req.body.userStatus);
+        console.log(user);
+
+        res.status(200).send({
+            status : 200,
+            message : "User Record Updated Successfully !",
+            user : {
+                name : req.body.name,
+                userId : user.userId,
+                email : user.email,
+                userType :req.body.userType,
+                userStatus : req.body.userStatus,
+            }
+        })
+    }catch(err){
+        console.log(err);
+        res.status(500).send({
+            status : 200,
+            message : "Internal Server Error while updating !"
+        })
+    }
+}
+
+
 module.exports = {
     findUserByID ,
     findAllUsers , 
+    updateUserByID
 }

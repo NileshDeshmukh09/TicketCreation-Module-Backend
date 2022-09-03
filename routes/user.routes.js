@@ -1,6 +1,7 @@
 
 /**
- * Define the routes for the UserResource
+ *  The routes for the User 
+ *  Resource
  */
 
 const express = require("express");
@@ -14,6 +15,10 @@ router.get("/ticketsmodule/api/v1/users",[JWTAuth.verifyToken , JWTAuth.isAdmin]
  
  /** FIND-USER-BY-ID -- GET */
 router.get("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken , JWTAuth.isAdmin], userController.findUserByID )
+
+
+  /** UPDATE-USER --  PUT */
+  app.put("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken , JWTAuth.isAdmin], userController.updateUserByID )
  
 
 module.exports = router
