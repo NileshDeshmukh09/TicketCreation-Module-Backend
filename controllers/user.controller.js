@@ -15,7 +15,7 @@ async function findAllUsers(req, res){
             return res.status(200).send({
                 status : 200,
                 message : "Successfully Fetched All users !",
-                users : objectConvertor.userResponse(users)// user Password will not be Returned in response.
+                users : responseConvertor.userResponse(users)// user Password will not be Returned in response.
             });
         }else{
             return res.status(200).send({
@@ -58,9 +58,7 @@ async function findAllUsers(req, res){
 
 }
 
-/** 
- * Update the User - Status , userType
- *   - only ADMIN shouldd be allowed to do this !
- * 
- * ADMIN  - name , userStatus , userType
- */
+module.exports = {
+    findUserByID ,
+    findAllUsers , 
+}

@@ -1,19 +1,19 @@
+
 /**
- * Routes for Authentication and Authorization
- * 
+ * Define the routes for the UserResource
  */
 
-// RESTFULL -APIs for Authentication
 const express = require("express");
-const authController = require("../controllers/auth.controller");
-const { signupVerification } = require("../middlewares");
 const router = express.Router();
-
-/** SIGNUP - POST */
-router.post("/ticketsmodule/api/v1/auth/signup",[signupVerification.addMiddlewaresToSignupRequest], authController.signup);
-
- /** SIGNIN - POST */
-router.post("/ticketsmodule/api/v1/auth/signin", authController.signin);
+ const userController = require("../controllers/user.controller");
+ const { JWTAuth } = require("../middlewares")
+ 
+ 
+ /** FIND-ALL-USERS -- GET */
+router.get("/ticketsmodule/api/v1/users",[JWTAuth.verifyToken , JWTAuth.isAdmin] , userController.findAllUsers)
+ 
+ /** FIND-USER-BY-ID -- GET */
+router.get("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken , JWTAuth.isAdmin], userController.findUserByID )
+ 
 
 module.exports = router
-   
