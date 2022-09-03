@@ -13,3 +13,6 @@ router.get("/ticketsmodule/api/v1/tickets" ,[ JWTAuth.verifyToken ], ticketContr
     
 /** GET ONE TICKET -- GET */
 router.get("/ticketsmodule/api/v1/tickets/:id" ,[ JWTAuth.verifyToken ], ticketController.getOneTicket  );
+
+  /** UPDATE TICKETS -- PUT */
+router.put("/ticketsmodule/api/v1/tickets/:id" ,[ JWTAuth.verifyToken ], ticketController.updateTicket  );
