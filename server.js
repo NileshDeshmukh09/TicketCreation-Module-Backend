@@ -8,13 +8,13 @@ const User = require("./models/user.model");
 const cors = require("cors");
 
 const app = express();
-let origin = 'http://localhost:3000';
 
 
-app.use(cors({
-    origin,
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}))
+app.use(
+    cors({
+        origin: '*',
+    })
+);
 
 app.use(logger('dev'))
 app.use(bodyParser.json());
