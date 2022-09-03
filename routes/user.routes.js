@@ -18,7 +18,7 @@ router.get("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken , JWTAuth
 
 
   /** UPDATE-USER --  PUT */
-  app.put("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken , JWTAuth.isAdmin], userController.updateUserByID )
+  router.put("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken , JWTAuth.isAdmin], userController.updateUserByID )
  
 
 module.exports = router

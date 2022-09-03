@@ -16,16 +16,10 @@
          required : true,
      },
  
-     ticketPriority : {
-         type : Number,
-         required : true,
-         default : constants.ticketPriority.four //Possible values : 1/2/3/4
-     },
- 
      status : {
          type : String,
          required : true,
-         default : constants.ticketStatus.open, // Possible values : OPEN / CLOSED / BLOCKED
+         default : constants.ticketStatus.open, // Possible values : OPEN / CLOSED / BLOCKED /IN_PROGRESS
      },
  
      reporter : { // Who created ticket - userID  of the creater

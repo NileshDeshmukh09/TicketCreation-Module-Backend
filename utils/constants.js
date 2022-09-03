@@ -16,6 +16,13 @@
         rejected : "REJECTED"
     },
 
+    ticketStatus : {
+        open : "OPEN",
+        closed : "CLOSED",
+        blocked : "BLOCKED",
+        inProgress : "IN_PROGRESS",
+    },
+
    
 
   
