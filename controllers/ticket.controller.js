@@ -150,3 +150,88 @@ exports.getAllTickets = async (req, res) => {
           Ticket : responseConvertor.ticketResponse(ticket)
      });
 }
+
+
+/**
+ * Controller to Update the Ticket
+ */
+ exports.updateTicket = async (req, res) => {
+
+     /**
+      * Check the Ticket exists 
+      */
+     const ticket = await Ticket.findOne({
+          _id: req.params.id
+     });
+
+     if (ticket == null) {
+          return res.status(200).send({
+               message: "Ticket doesn't exist "
+          })
+     }
+
+     try {
+
+
+          /**
+           * Only the Ticket Requester be allowed to update the Ticket
+           */
+
+          const user = await User.findOne({
+               userId: req.userId
+          });
+
+          console.log(ticket.assignee);
+
+          if( ticket.assignee == undefined ){
+               ticket.assignee = req.userId;
+          }
+          console.log(req.userId);
+          if ( (user.ticketsCreated == undefined || !user.ticketsCreated.includes(req.params.id)) && !(user.userType == constants.userTypes.admin )&& !(ticket.assignee == req.userId) ) {
+               return res.status(403).send({
+                    message: "Only Owner of the Ticket is allowed to Update Ticket "
+               })
+          }
+
+          /**
+          * Update the Attributes of the Saved Ticket 
+          */
+
+          ticket.title = req.body.title != undefined ? req.body.title : ticket.title;
+          ticket.description = req.body.description != undefined ? req.body.description : ticket.description;
+          ticket.status = req.body.status != undefined ? req.body.status : ticket.status;
+
+          /**
+           * Ability to Re-assign the ticket
+           */
+          if( user.userType == constants.userTypes.admin ){
+               ticket.assignee = req.body.assignee != undefined ? req.body.assignee : ticket.assignee ;
+          }
+
+          const  engineer = await User.findOne({
+               userId : ticket.assignee,
+          });
+
+          console.log("Engineer :" , engineer);
+          /** 
+          * Saved the Changed Ticket
+          */
+          const updatedTicket = await ticket.save();
+
+          /**  
+           *  Return the Updated Ticket
+           */
+          return res.status(200).send({
+               message: "Ticket Updated successfully !",
+               ticket: responseConvertor.ticketResponse(updatedTicket)
+          });
+     }
+
+     catch (error) {
+          console.log("Someone updating tickets  , who has not created ticket !");
+          return res.status(403).send({
+               message: "Ticket can be Updated Only by Customer , who created it !"
+          })
+     }
+}
+
