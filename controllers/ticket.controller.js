@@ -133,3 +133,20 @@ exports.getAllTickets = async (req, res) => {
      });
 
 }
+
+
+/**
+ * Controller to fetch the Tickets based on ID's 
+ */
+ exports.getOneTicket = async (req, res) => {
+
+     const ticket = await Ticket.findOne({
+          _id: req.params.id
+     });
+
+     res.status(200).send({
+          status : 200,
+          message : "Ticket get successfully !",
+          Ticket : responseConvertor.ticketResponse(ticket)
+     });
+}

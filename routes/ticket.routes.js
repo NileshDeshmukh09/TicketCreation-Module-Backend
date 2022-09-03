@@ -11,4 +11,5 @@ router.post("/ticketsmodule/api/v1/tickets" ,[ JWTAuth.verifyToken ], ticketCont
  /**GET ALL TICKETS - GET */
 router.get("/ticketsmodule/api/v1/tickets" ,[ JWTAuth.verifyToken ], ticketController.getAllTickets );
     
-  
+/** GET ONE TICKET -- GET */
+router.get("/ticketsmodule/api/v1/tickets/:id" ,[ JWTAuth.verifyToken ], ticketController.getOneTicket  );
