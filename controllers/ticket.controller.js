@@ -3,8 +3,7 @@ const Ticket = require("../models/ticket.model");
 const constants = require("../utils/constants");
 const responseConvertor = require("../utils/responseConvertor");
 
-
-
+/** Create a ticket */
 exports.createTicket = async (req, res) => {
 
     const ticketObj = {

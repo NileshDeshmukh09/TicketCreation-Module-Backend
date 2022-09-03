@@ -1,6 +1,5 @@
 /**
  * Routes for Authentication and Authorization
- * 
  */
 
 // RESTFULL -APIs for Authentication
