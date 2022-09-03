@@ -33,4 +33,42 @@
 return findByIDResponse;
 }
 
-module.exports = { userResponse , userResponseByID }
+function ticketResponse ( ticket ){
+    return {
+        title : ticket.title,
+        description : ticket.description,
+        ticketPriority : ticket.ticketPriority,
+        status : ticket.status,
+        reporter : ticket.reporter,
+        assignee : ticket.assignee,
+        id : ticket._id,
+        createdAt : ticket.createdAt,
+        updatedAt : ticket.updatedAt
+    }
+}
+
+function ticketListResponse(tickets) {
+    ticketResult = [];
+    tickets.forEach( ticket => {
+        ticketResult.push({
+            title : ticket.title,
+            description : ticket.description,
+            ticketPriority : ticket.ticketPriority,
+            status : ticket.status,
+            reporter : ticket.reporter,
+            assignee : ticket.assignee,
+            id : ticket._id,
+            createdAt : ticket.createdAt,
+            updatedAt : ticket.updatedAt
+        })
+    })
+
+    return ticketResult;
+}
+
+module.exports = { 
+    userResponse , 
+    userResponseByID ,
+    ticketResponse ,
+    ticketListResponse
+}

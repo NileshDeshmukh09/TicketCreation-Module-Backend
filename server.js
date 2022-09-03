@@ -50,8 +50,10 @@ async function init(){
 
 const authRouter = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
+const ticketRoutes = require('./routes/ticket.routes');
 app.use( authRouter );
 app.use( userRoutes );
+app.use( ticketRoutes );
 
 
 app.listen(TicketServerConfig.PORT, () => {

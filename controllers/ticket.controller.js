@@ -1,4 +1,4 @@
-const User = require("../models/uesr.model");
+const User = require("../models/user.model");
 const Ticket = require("../models/ticket.model");
 const constants = require("../utils/constants");
 const responseConvertor = require("../utils/responseConvertor");
@@ -9,8 +9,7 @@ exports.createTicket = async (req, res) => {
 
     const ticketObj = {
          title: req.body.title,
-         description: req.body.description,
-         ticketPriority: req.body.ticketPriority
+         description: req.body.description
     }
 
     /**
@@ -56,7 +55,7 @@ exports.createTicket = async (req, res) => {
 
               return res.status(201).send({
                    message: "Ticket , created Successfully !",
-                   ticket: objectConvertor.ticketResponse(ticket)
+                   ticket: responseConvertor.ticketResponse(ticket)
               })
          }
 
