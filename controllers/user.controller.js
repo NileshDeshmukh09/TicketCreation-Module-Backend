@@ -8,8 +8,48 @@ const responseConvertor = require("../utils/responseConvertor")
 /**Get all the Users */
 async function findAllUsers(req, res){
 
+     /**
+     * Read the data from the Query parameters
+    */
+   const nameReq = req.query.name;
+   const userStatusReq = req.query.userStatus;
+   const userTypeReq = req.query.userType;
+
+   const filterObjQuery = {};
+
+   if(nameReq && userStatusReq && userTypeReq){
+
+       filterObjQuery.name = nameReq;
+       filterObjQuery.userStatus = userStatusReq;
+       filterObjQuery.userType = userTypeReq;
+
+   }else if( userStatusReq && userTypeReq ){
+
+       filterObjQuery.userStatus = userStatusReq;
+       filterObjQuery.userType = userTypeReq;
+
+   }else if( nameReq && userStatusReq ){
+
+       filterObjQuery.name = nameReq;
+       filterObjQuery.userStatus = userStatusReq;
+
+   }else if(nameReq ){
+
+        filterObjQuery.name = nameReq;
+
+   }else if(userStatusReq ){
+       
+        filterObjQuery.userStatus = userStatusReq;
+
+   }else if(userTypeReq ){
+        filterObjQuery.userType = userTypeReq;
+   }
+
+   console.log(filterObjQuery);
+
+
     try {
-        const users  = await User.find();
+        const users  = await User.find(filterObjQuery);
 
         if( users.length > 0 ){
             return res.status(200).send({
