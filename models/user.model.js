@@ -53,6 +53,17 @@
           required : true,
           default : constants.userStatus.approved
       },
+
+      ticketsCreated : {
+        type : [mongoose.SchemaTypes.ObjectId],
+        ref :"Ticket" /* Collection Name */
+        /* One to Many Relationship between the Ticket's and the User */
+    },
+
+    ticketsAssigned : {
+        type : [mongoose.SchemaTypes.ObjectId],
+        ref : "Ticket"
+    }
     
   
   });
