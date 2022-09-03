@@ -8,6 +8,15 @@ const config = require("../configs/auth.config");
 exports.signup = async ( req, res ) => {
 
     var userStatus = req.body.userStatus;
+
+    if (!userStatus) {
+        if (!req.body.userType || req.body.userType == constants.userTypes.customer) {
+            userStatus = constants.userStatus.approved;
+        } else {
+            userStatus = constants.userStatus.pending;
+        }
+    }
+
     const UserDetailsStoredInDB = {
         name: req.body.name,
         userId: req.body.userId,
@@ -24,7 +33,7 @@ exports.signup = async ( req, res ) => {
         const createdUser = await User.create(UserDetailsStoredInDB);
 
          /**
-         * Return the response
+         *  response
          */
           const ResponseOfNewUser = {
             name: createdUser.name,
