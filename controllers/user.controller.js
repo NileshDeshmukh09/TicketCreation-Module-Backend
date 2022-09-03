@@ -3,6 +3,7 @@
 */
 
 const User = require("../models/user.model");
+const responseConvertor = require("../utils/responseConvertor")
 
 
 /**
@@ -16,13 +17,14 @@ const User = require("../models/user.model");
     if( user ){
         return res.status(200).send({
             status : 200,
-            message : "Successfully Fetched  user !",  
+            message : "Successfully Fetched  user !",
+            user : responseConvertor.userResponseByID( user )  
             
         });
     }else{
         return res.status(200).send({
             status : 200,
-            message : "user with ID :  "+ userIDRequest + " - doesn't exist",
+            message : "user  ID :  "+ userIDRequest + " - doesn't exist",
         })
     }
 
