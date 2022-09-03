@@ -37,7 +37,6 @@ function ticketResponse ( ticket ){
     return {
         title : ticket.title,
         description : ticket.description,
-        ticketPriority : ticket.ticketPriority,
         status : ticket.status,
         reporter : ticket.reporter,
         assignee : ticket.assignee,
@@ -53,7 +52,6 @@ function ticketListResponse(tickets) {
         ticketResult.push({
             title : ticket.title,
             description : ticket.description,
-            ticketPriority : ticket.ticketPriority,
             status : ticket.status,
             reporter : ticket.reporter,
             assignee : ticket.assignee,

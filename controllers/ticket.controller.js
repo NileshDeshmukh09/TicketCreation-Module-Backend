@@ -68,3 +68,68 @@ exports.createTicket = async (req, res) => {
          })
     }
 }
+
+
+/* API to fetch all the Tickets */
+exports.getAllTickets = async (req, res) => {
+     /**
+     * I want to get the list of all the tickets
+     */
+     const queryObj = {};
+
+
+     const user = await User.findOne({ userId: req.userId });
+
+     /**
+      * If ADMIN , can able to see all the tickets created 
+      */
+     if (user.userType === constants.userTypes.admin) {
+          /**
+           * Return all the ticket 
+           * No need to change in the QueryObj
+           */
+     }
+     else if (user.userType == constants.userTypes.engineer) {
+          /**
+           * Get all the tickets Created or Assigned !
+           */
+          queryObj.assignee = req.userId;
+
+     }
+     else if (user.userType == constants.userTypes.customer) {
+
+          /**
+           * if CUSTOMER ,should get ticket created by Him.
+           */
+          if (user.ticketsCreated == null || user.ticketsCreated.length == 0) {
+               return res.status(200).send({
+                    message: "No tickets created by You !!!"
+               })
+          }
+
+          queryObj._id = {
+               $in: user.ticketsCreated /* Array's of TicketID's */
+          }
+     }
+
+     if (req.query.status != undefined) {
+          queryObj.status = req.query.status;
+     };
+
+
+     console.log(queryObj);
+     const tickets = await Ticket.find(queryObj);
+     console.log("tickets.length : ", tickets.length);
+
+     if (tickets == null || tickets.length == 0) {
+          return res.status(200).send({
+               message: `No Tickets Found with status = ${queryObj.status} !`
+          })
+     }
+
+     return res.status(200).send({
+          message: `${user.userType} | ${user.userId} , Fetched All Tickets !`,
+          tickets: responseConvertor.ticketListResponse(tickets)
+     });
+
+}
