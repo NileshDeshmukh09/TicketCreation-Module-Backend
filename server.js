@@ -11,9 +11,7 @@ const app = express();
 
 
 app.use(
-    cors({
-        origin: '*',
-    })
+    cors()
 );
 
 app.use(logger('dev'))
