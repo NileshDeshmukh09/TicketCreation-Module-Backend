@@ -46,6 +46,7 @@
     //  }
  });
 
+/* These will automatically generates the created and updated fields */
  ticketSchema.set('timestamps' , true);
  
  module.exports = mongoose.model("Ticket" , ticketSchema);
