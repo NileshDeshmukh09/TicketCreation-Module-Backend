@@ -24,6 +24,17 @@ exports.createTicket = async (req, res) => {
               ticketObj.assignee = engineer.userId
          }
 
+         /** User ID of reported must be present in x-access-token */
+         const customer = await User.findOne({
+              userId : req.userId
+         })
+
+         if (customer) {
+              ticketObj.reporter = customer.userId
+         }
+
+
+
          const ticket = await Ticket.create(ticketObj);
 
          /**
@@ -52,6 +63,8 @@ exports.createTicket = async (req, res) => {
               engineer.ticketsAssigned.push(ticket._id);
               await engineer.save();
 
+              console.log(ticket.reporter);
+              console.log(ticket);
               return res.status(201).send({
                    message: "Ticket , created Successfully !",
                    ticket: responseConvertor.ticketResponse(ticket)
@@ -122,7 +135,7 @@ exports.getAllTickets = async (req, res) => {
 
      if (tickets == null || tickets.length == 0) {
           return res.status(200).send({
-               message: `No Tickets Found with status = ${queryObj.status} !`
+               message: `No Tickets Found !`
           })
      }
 
@@ -211,7 +224,6 @@ exports.getAllTickets = async (req, res) => {
                userId : ticket.assignee,
           });
 
-          console.log("Engineer :" , engineer);
           /** 
           * Saved the Changed Ticket
           */

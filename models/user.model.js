@@ -4,7 +4,6 @@
 */
 
 const mongoose = require("mongoose");
-const databaseConfig = require("../configs/database.config");
 const constants = require("../utils/constants");
 
 const userSchema = new mongoose.Schema({

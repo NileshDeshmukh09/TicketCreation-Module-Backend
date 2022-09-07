@@ -61,7 +61,6 @@ async function findAllUsers(req, res){
             return res.status(200).send({
                 status : 200,
                 message : "No user found !"
-                // users : objectConvertor.userResponse(users)// user Password will not be Returned in response.
             });
         }
     } catch (error) {

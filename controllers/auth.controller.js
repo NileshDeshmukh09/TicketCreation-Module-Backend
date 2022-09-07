@@ -2,7 +2,6 @@ const User = require("../models/user.model");
 const constants = require("../utils/constants");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("../configs/auth.config");
 /** Registration Controller  for the User  */
 
 exports.signup = async ( req, res ) => {
@@ -52,7 +51,7 @@ exports.signup = async ( req, res ) => {
         });
     } catch (err) {
 
-        console.error( err.message);
+        console.log( err.message);
         res.status(500).send({
             message: "Internal Server Error ,when Insert User !"
         })

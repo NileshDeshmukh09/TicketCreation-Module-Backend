@@ -1,6 +1,5 @@
 const express =require("express");
 const TicketServerConfig = require("./configs/TicketServer.config");
-const databaseConfig = require("./configs/database.config");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
@@ -25,11 +24,11 @@ app.use(bodyParser.urlencoded({extended:true}));
     console.log("MongoDB connected ");
     
     /** Intialize the admin */
-    init();
+    createAdmin();
     
 });
 
-async function init(){
+async function createAdmin(){
 
     var user = await User.findOne({ userId : "admin" });
 
