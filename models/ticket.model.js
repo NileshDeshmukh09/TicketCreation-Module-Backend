@@ -30,20 +30,22 @@
          type : String,
      },
  
-     createdAt : {
-         type : Date,
-         immutable : true,
-         default : () => {
-             return Date.now();
-         }
-     },
+    //  createdAt : {
+    //      type : Date,
+    //      immutable : true,
+    //      default : () => {
+    //          return Date.now();
+    //      }
+    //  },
  
-     updatedAt : {
-         type : Date,
-         default : () => {
-             return Date.now();
-         }
-     }
- })
+    //  updatedAt : {
+    //      type : Date,
+    //      default : () => {
+    //          return Date.now();
+    //      }
+    //  }
+ });
+
+ ticketSchema.set('timestamps' , true);
  
  module.exports = mongoose.model("Ticket" , ticketSchema);
