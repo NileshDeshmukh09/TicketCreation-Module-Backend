@@ -15,11 +15,29 @@ exports.createTicket = async (req, res) => {
      * If the Engineer  is available 
      */
     try {
-         const engineer = await User.findOne({
-              userType: constants.userTypes.engineer,
-              userStatus: constants.userStatus.approved,
-         })
+     //     const engineer = await User.findOne({
+     //          userType: constants.userTypes.engineer,
+     //          userStatus: constants.userStatus.approved,
+     //     })
+     const approvedEngineer = await User.aggregate([
+          { $match : {
+               userType : constants.userTypes.engineer,
+               userStatus : constants.userStatus.approved,
+               }
+          },
+          {  $unwind : "$ticketsAssigned" } ,
+          { $group : { _id : "$_id" ,
+                    ticketsAssigned : { "$first" : "$ticketsAssigned"},
+                    length : { $sum : 1} } } ,
+                    { $sort : { length : 1 } }
+     ])
 
+     console.log("Aggregate Engineer : " , approvedEngineer);
+
+     const engineer = await User.findOne({ _id : approvedEngineer[0]._id });
+
+     console.log("EngineerAssignedTickets : " , engineer );
+     console.log("---------");
          if (engineer) {
               ticketObj.assignee = engineer.userId
          }
@@ -60,7 +78,8 @@ exports.createTicket = async (req, res) => {
               /**
                * Update the Engineer
                */
-              engineer.ticketsAssigned.push(ticket._id);
+              console.log(engineer);
+              console.log(" ticketsAssigned : ", engineer.ticketsAssigned.push(ticket._id));
               await engineer.save();
 
               console.log(ticket.reporter);
