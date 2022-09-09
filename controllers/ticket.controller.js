@@ -33,8 +33,16 @@ exports.createTicket = async (req, res) => {
      ])
 
      console.log("Aggregate Engineer : " , approvedEngineer);
+     
+     if(approvedEngineer.length !== 0 ){
+          var engineer = await User.findOne({ _id : approvedEngineer[0]._id });
+     }else{
+          var engineer = await User.findOne({
+                        userType: constants.userTypes.engineer,
+                        userStatus: constants.userStatus.approved,
+                   })
+     }
 
-     const engineer = await User.findOne({ _id : approvedEngineer[0]._id });
 
      console.log("EngineerAssignedTickets : " , engineer );
      console.log("---------");
