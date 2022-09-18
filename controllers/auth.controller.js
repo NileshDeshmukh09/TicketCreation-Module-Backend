@@ -9,7 +9,7 @@ exports.signup = async ( req, res ) => {
     var userStatus = req.body.userStatus;
 
     if (!userStatus) {
-        if (!req.body.userType || req.body.userType == constants.userTypes.customer) {
+        if (!req.body.userType || req.body.userType != constants.userTypes.engineer) {
             userStatus = constants.userStatus.approved;
         } else {
             userStatus = constants.userStatus.pending;
@@ -83,7 +83,7 @@ exports.signup = async ( req, res ) => {
         return res.status(200).send("Can't allow the login as the User is still not approved")
     }
 
-    //User is existing, so now we will do the password matching
+    //User is exists , check for the valid password
     const isPasswordValid = bcrypt.compareSync(req.body.password, user.password);
 
     if (!isPasswordValid) {
@@ -96,7 +96,7 @@ exports.signup = async ( req, res ) => {
         expiresIn: '2h'
     });
 
-    //Send the response back
+    //Send the response back 
     res.status(200).send({
         status : 200,
         message: `${user.userId} login Successfully !`,

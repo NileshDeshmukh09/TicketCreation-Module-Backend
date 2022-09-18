@@ -1,5 +1,5 @@
 /**
- * This contains the constants to be used everyWhere in the Code.
+ * This File  contains the constants to be used everyWhere in the Code.
  */
 
  module.exports = {

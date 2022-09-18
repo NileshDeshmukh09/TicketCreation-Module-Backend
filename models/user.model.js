@@ -28,19 +28,7 @@ const userSchema = new mongoose.Schema({
         minLength: 10,
         unqiue: true
     },
-    createdAt: {
-        type: Date,
-        immutable: true,
-        default: () => {
-            return Date.now();
-        }
-    },
-    updatedAt: {
-        type: Date,
-        default: () => {
-            return Date.now();
-        }
-    },
+
     userType: {
         type: String,
         required: true,
@@ -66,6 +54,9 @@ const userSchema = new mongoose.Schema({
 
 
 });
+
+/* These will automatically generates the created and updated fields */
+userSchema.set('timestamps' , true);
 
 
 

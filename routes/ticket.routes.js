@@ -6,13 +6,13 @@ const {  JWTAuth } = require("../middlewares");
 module.exports = router
 
 /** createTicket - POST  */
-router.post("/ticketsmodule/api/v1/tickets" ,[ JWTAuth.verifyToken ], ticketController.createTicket );
+router.post("/tickets" ,[ JWTAuth.verifyToken ], ticketController.createTicket );
 
  /**GET ALL TICKETS - GET */
-router.get("/ticketsmodule/api/v1/tickets" ,[ JWTAuth.verifyToken ], ticketController.getAllTickets );
+router.get("/tickets" ,[ JWTAuth.verifyToken ], ticketController.getAllTickets );
     
 /** GET ONE TICKET -- GET */
-router.get("/ticketsmodule/api/v1/tickets/:id" ,[ JWTAuth.verifyToken ], ticketController.getOneTicket  );
+router.get("/tickets/:id" ,[ JWTAuth.verifyToken ], ticketController.getOneTicket  );
 
   /** UPDATE TICKETS -- PUT */
-router.put("/ticketsmodule/api/v1/tickets/:id" ,[ JWTAuth.verifyToken ], ticketController.updateTicket  );
+router.put("/tickets/:id" ,[ JWTAuth.verifyToken ], ticketController.updateTicket  );

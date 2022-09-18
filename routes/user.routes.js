@@ -11,14 +11,14 @@ const router = express.Router();
  
  
  /** FIND-ALL-USERS -- GET */
-router.get("/ticketsmodule/api/v1/users",[JWTAuth.verifyToken , JWTAuth.isAdmin] , userController.findAllUsers)
+router.get("/users",[JWTAuth.verifyToken , JWTAuth.isAdmin] , userController.findAllUsers)
  
  /** FIND-USER-BY-ID -- GET */
-router.get("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken , JWTAuth.isAdmin], userController.findUserByID )
+router.get("/users/:userId", [JWTAuth.verifyToken , JWTAuth.isAdmin], userController.findUserByID )
 
 
   /** UPDATE-USER --  PUT */
-  router.put("/ticketsmodule/api/v1/users/:userId", [JWTAuth.verifyToken ], userController.updateUserByID )
+  router.put("/users/:userId", [JWTAuth.verifyToken ], userController.updateUserByID )
  
 
 module.exports = router

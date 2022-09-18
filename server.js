@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 /**
  * Setup the mongodb connection 
  */
+console.log(process.env.DB_URL);
  mongoose.connect(process.env.DB_URL, ()=>{
     console.log("MongoDB connected ");
     
@@ -30,23 +31,28 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 async function createAdmin(){
 
-    var user = await User.findOne({ userId : "admin" });
+    
+    try{
+        var user = await User.findOne({ userId : "admin" });
 
-    if( user ){
-        return;
-    }else{
-        
-        /**
-         * Create the ADMIN user
-        */
-       const user = await User.create({
-           name  : "Nilesh",
-           userId : "admin",
-           email : "nileshDesh@gmail.com",
-           userType : "ADMIN",
-           password : bcrypt.hashSync("Welcome987" , 8)
-       });
-       console.log("ADMIN is CREATED !")
+        if( user ){
+            return;
+        }else{
+            
+            /**
+             * Create the ADMIN user
+             */
+            const user = await User.create({
+                name  : "Nilesh",
+                userId : "admin",
+                email : "nileshDesh@gmail.com",
+                userType : "ADMIN",
+                password : bcrypt.hashSync("Welcome987" , 8)
+            });
+            console.log("ADMIN is CREATED !")
+        }
+    }catch( error ){
+        console.log( error.message );
     }
 }
 
@@ -56,9 +62,9 @@ async function createAdmin(){
 const authRouter = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const ticketRoutes = require('./routes/ticket.routes');
-app.use( authRouter );
-app.use( userRoutes );
-app.use( ticketRoutes );
+app.use( '/ticketsmodule/api/v1' , authRouter );
+app.use( '/ticketsmodule/api/v1' , userRoutes );
+app.use( '/ticketsmodule/api/v1' , ticketRoutes );
 
 
 app.listen(TicketServerConfig.PORT, () => {
