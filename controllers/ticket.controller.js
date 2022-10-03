@@ -15,10 +15,7 @@ exports.createTicket = async (req, res) => {
      * If the Engineer  is available 
      */
     try {
-     //     const engineer = await User.findOne({
-     //          userType: constants.userTypes.engineer,
-     //          userStatus: constants.userStatus.approved,
-     //     })
+
      const approvedEngineer = await User.aggregate([
           { $match : {
                userType : constants.userTypes.engineer,
@@ -31,8 +28,6 @@ exports.createTicket = async (req, res) => {
                     length : { $sum : 1} } } ,
                     { $sort : { length : 1 } }
      ])
-
-     console.log("Aggregate Engineer : " , approvedEngineer);
      
      if(approvedEngineer.length !== 0 ){
           var engineer = await User.findOne({ _id : approvedEngineer[0]._id });
@@ -43,9 +38,6 @@ exports.createTicket = async (req, res) => {
                    })
      }
 
-
-     console.log("EngineerAssignedTickets : " , engineer );
-     console.log("---------");
          if (engineer) {
               ticketObj.assignee = engineer.userId
          }
@@ -86,12 +78,8 @@ exports.createTicket = async (req, res) => {
               /**
                * Update the Engineer
                */
-              console.log(engineer);
-              console.log(" ticketsAssigned : ", engineer.ticketsAssigned.push(ticket._id));
               await engineer.save();
 
-              console.log(ticket.reporter);
-              console.log(ticket);
               return res.status(201).send({
                    message: "Ticket , created Successfully !",
                    ticket: responseConvertor.ticketResponse(ticket)
@@ -99,8 +87,8 @@ exports.createTicket = async (req, res) => {
          }
 
     } catch (error) {
-         console.log(error);
 
+         console.log(error);
          return res.status(500).send({
               status: 500,
               message: "Internal Server Error "
@@ -130,7 +118,7 @@ exports.getAllTickets = async (req, res) => {
      }
      else if (user.userType == constants.userTypes.engineer) {
           /**
-           * Get all the tickets Created or Assigned !
+           * Get all the tickets  Assigned !
            */
           queryObj.assignee = req.userId;
 
@@ -155,10 +143,7 @@ exports.getAllTickets = async (req, res) => {
           queryObj.status = req.query.status;
      };
 
-
-     console.log(queryObj);
      const tickets = await Ticket.find(queryObj);
-     console.log("tickets.length : ", tickets.length);
 
      if (tickets == null || tickets.length == 0) {
           return res.status(200).send({
@@ -220,12 +205,12 @@ exports.getAllTickets = async (req, res) => {
                userId: req.userId
           });
 
-          console.log(ticket.assignee);
+          // console.log(ticket.assignee);
 
           if( ticket.assignee == undefined ){
                ticket.assignee = req.userId;
           }
-          console.log(req.userId);
+         
           if ( (user.ticketsCreated == undefined || !user.ticketsCreated.includes(req.params.id)) && !(user.userType == constants.userTypes.admin )&& !(ticket.assignee == req.userId) ) {
                return res.status(403).send({
                     message: "Only Owner of the Ticket is allowed to Update Ticket "
@@ -239,13 +224,6 @@ exports.getAllTickets = async (req, res) => {
           ticket.title = req.body.title != undefined ? req.body.title : ticket.title;
           ticket.description = req.body.description != undefined ? req.body.description : ticket.description;
           ticket.status = req.body.status != undefined ? req.body.status : ticket.status;
-
-          /**
-           * Ability to Re-assign the ticket
-           */
-          if( user.userType == constants.userTypes.admin ){
-               ticket.assignee = req.body.assignee != undefined ? req.body.assignee : ticket.assignee ;
-          }
 
           const  engineer = await User.findOne({
                userId : ticket.assignee,

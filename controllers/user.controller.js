@@ -110,9 +110,6 @@ async function updateUserByID(req, res){
             userType : req.body.userType,
         }).exec();
 
-        console.log("UserStatus : ", req.body.userStatus);
-        console.log(user);
-
         res.status(200).send({
             status : 200,
             message : "User Record Updated Successfully !",
@@ -127,7 +124,7 @@ async function updateUserByID(req, res){
     }catch(err){
         console.log(err);
         res.status(500).send({
-            status : 200,
+            status : 500,
             message : "Internal Server Error while updating !"
         })
     }
