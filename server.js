@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 /**
  * Setup the mongodb connection 
  */
-console.log(process.env.DB_URL);
+// console.log(process.env.DB_URL);
  mongoose.connect(process.env.DB_URL, ()=>{
     console.log("MongoDB connected ");
     
@@ -62,8 +62,10 @@ async function createAdmin(){
 const authRouter = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const ticketRoutes = require('./routes/ticket.routes');
+const homeRoutes = require('./routes/home.routes');
 
 
+app.use(  homeRoutes );
 app.use( '/ticketsmodule/api/v1' , authRouter );
 app.use( '/ticketsmodule/api/v1' , userRoutes );
 app.use( '/ticketsmodule/api/v1' , ticketRoutes );
